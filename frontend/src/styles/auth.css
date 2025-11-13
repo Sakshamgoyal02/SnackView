@@ -1,0 +1,176 @@
+.partner-link{color:var(--accent);text-decoration:none;font-size:13px;font-weight:600}
+.role-label{font-size:13px;color:var(--muted);margin-left:2px;font-weight:600}
+.partner-switch{
+  color:var(--accent);
+  text-decoration:none; /* remove underline */
+  font-size:13px;
+  background:transparent;
+  border:none;
+  padding:0;
+  cursor:pointer;
+  transition:color 160ms ease, text-decoration 160ms ease;
+}
+.partner-switch:hover{ text-decoration:underline; color:color-mix(in srgb, var(--accent) 80%, var(--text) 20%); }
+
+
+.auth-page{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:32px;
+}
+
+.auth-card{
+  width:100%;
+  max-width:var(--max-width);
+  background:var(--card-bg);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+ 
+  padding:28px 28px 28px 28px;
+  box-sizing:border-box;
+  position:relative; 
+  margin: 12px;
+}
+
+
+.auth-card{
+ 
+  padding-bottom: max(40px, calc(var(--toggle-track-height,20px) + 8px));
+}
+
+.auth-brand{
+  font-weight:700;
+  font-size:20px;
+  color:var(--accent);
+  margin-bottom:8px;
+}
+
+.auth-tools{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+  flex-wrap:wrap;
+}
+
+.partner-link{color:var(--accent);text-decoration:none;font-size:13px;font-weight:600}
+
+.auth-tools .right{display:flex;gap:2px;align-items:center}
+.theme-toggle{font-size:13px;padding:6px 8px;border-radius:8px}
+
+.auth-card h2{
+  margin:0 0 6px 0;
+  font-size:20px;
+}
+
+.auth-card .muted{
+  color:var(--muted);
+  margin-bottom:18px;
+  font-size:14px;
+}
+
+.auth-form{display:flex;flex-direction:column;gap:12px}
+.auth-form label{display:block;font-size:13px;color:var(--muted)}
+.auth-form label span{display:block;margin-bottom:6px;color:var(--muted);font-size:13px}
+.auth-form input, .auth-form textarea, .auth-form select{
+  width:100%;
+  padding:10px 12px;
+  border-radius:10px;
+  border:1px solid var(--input-border);
+  background:var(--input-bg);
+  color:var(--text);
+  outline:none;
+  box-sizing:border-box;
+}
+
+/* Slightly larger controls for touch devices */
+@media (max-width:420px){
+  .auth-form input, .auth-form textarea, .auth-form select{
+    padding:12px 14px;
+    font-size:15px;
+  }
+}
+
+/* smaller address textarea specifically */
+.auth-form textarea.address-field{
+  height:48px;
+  padding:8px 10px;
+  resize:vertical;
+}
+.auth-form input::placeholder{color:var(--muted)}
+.auth-form input:focus{box-shadow:0 4px 14px rgba(0,0,0,0.06);border-color:rgba(0,0,0,0.06)}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  background:var(--accent);
+  color:var(--accent-contrast);
+  border:none;
+  padding:10px 14px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
+  /* smooth interaction */
+  transition: transform 120ms ease, box-shadow 120ms ease, background-color 160ms ease, filter 120ms ease;
+}
+
+.btn.secondary{
+  background:transparent;
+  color:var(--text);
+  border:1px solid var(--input-border);
+}
+
+/* Hover / active states for primary and secondary buttons */
+.btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 26px rgba(8,12,20,0.12);
+  filter:brightness(0.98);
+  /* slightly darker hover color mixed from the accent */
+  background: color-mix(in srgb, var(--accent) 82%, black 18%);
+}
+
+.btn:active{
+  transform:translateY(0);
+  box-shadow:0 6px 14px rgba(8,12,20,0.08);
+  filter:brightness(0.96);
+}
+
+.btn.secondary:hover{
+  background:color-mix(in srgb, var(--input-bg) 88%, var(--text) 12%);
+}
+
+
+@media (max-width:720px){
+  .btn{ width:100%; padding:12px 16px; }
+  .auth-card{ max-width:92vw; padding:20px; }
+  .auth-tools .right{ margin-top:8px }
+  .auth-grid{grid-template-columns:1fr}
+}
+
+@media (max-width:420px){
+
+  .auth-card{
+    max-width:96vw;
+    margin:10px;
+  padding:16px 16px calc(var(--toggle-track-height) + var(--toggle-caption-height) + 12px) 16px;
+  }
+  .auth-card h2{ font-size:18px }
+  .auth-card .muted{ font-size:13px }
+  .auth-form{ gap:10px }
+  .auth-footer{ font-size:13px }
+}
+
+.auth-footer{margin-top:14px;font-size:13px;color:var(--muted);display:flex;align-items:center;justify-content:space-between;gap:8px}
+.auth-footer a{color:var(--accent);text-decoration:none}
+.auth-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+@media (max-width:720px){
+  .auth-card{padding:20px}
+  .auth-grid{grid-template-columns:1fr}
+}
+
