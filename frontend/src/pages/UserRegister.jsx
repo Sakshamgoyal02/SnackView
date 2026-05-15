@@ -16,7 +16,7 @@ const UserRegister = ()=>{
    const password = e.target.password.value;
   
 
-   const response = await axios.post("http://localhost:3000/api/auth/user/register", {
+   const response = await axios.post("/api/auth/user/register", {
     fullName: name,
     email,
     password
@@ -47,7 +47,7 @@ const UserRegister = ()=>{
   <form className="auth-form" aria-label="User Register Form" onSubmit={handleSubmit}>
           <label>
             <span>Name</span>
-            <input type="text" name="name" placeholder="Your full name" />
+            <input type="text" name="name" placeholder="Your full name"/>
           </label>
 
           <label>

@@ -35,7 +35,7 @@
   left: 0.5rem !important;
   top: 1.4rem !important;
   border: none;
-  background: grey;
+  background: rgba(255, 0, 0, 0.696);
   color: var(--text);
   font-size: 1.5rem;
   border-radius: 50%;
@@ -44,6 +44,13 @@
   cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease;
   box-shadow: var(--shadow);
+}
+
+.back-btn-fixed {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 9999;
 }
 
 .back-btn:hover {

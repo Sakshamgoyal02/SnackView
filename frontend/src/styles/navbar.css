@@ -25,11 +25,13 @@
 
 .icon-btn:hover { transform: scale(1.08); background: rgba(255,255,255,0.06); }
 
+.reel-actions .icon-btn {
+  color: white;
+}
 
-.icon-btn svg { stroke: #fff; fill: none; }
-
-
-.icon-btn.active { background: rgba(255,255,255,0.06); }
+.reel-actions .icon-btn.active {
+  color: red;
+}
 
 /* bottom navbar */
 .bottom-navbar {
@@ -47,6 +49,8 @@
   z-index: 200;
   padding: 4px 0;
 }
+ 
+
 
 .nav-item{
   display:flex;

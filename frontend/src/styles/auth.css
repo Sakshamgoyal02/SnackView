@@ -82,7 +82,7 @@
   border:1px solid var(--input-border);
   background:var(--input-bg);
   color:var(--text);
-  outline:none;
+   outline:none;
   box-sizing:border-box;
 }
 
@@ -100,7 +100,7 @@
   padding:8px 10px;
   resize:vertical;
 }
-.auth-form input::placeholder{color:var(--muted)}
+.auth-form input::placeholder{color: gray}
 .auth-form input:focus{box-shadow:0 4px 14px rgba(0,0,0,0.06);border-color:rgba(0,0,0,0.06)}
 
 .btn{

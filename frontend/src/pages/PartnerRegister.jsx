@@ -16,7 +16,7 @@ const PartnerRegister = ()=>{
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    const response = await axios.post("http://localhost:3000/api/auth/food-partner/register",{
+    const response = await axios.post("/api/auth/food-partner/register",{
       name: shopName,
       phone,
       address,
@@ -40,7 +40,7 @@ const PartnerRegister = ()=>{
             <p className="muted">Register your restaurant to start receiving orders.</p>
           </div>
           <div className="right">
-            <a href="/user/register" className="partner-switch">Switch</a>
+            <a href="/" className="partner-switch">Switch</a>
             <span className="role-label">User</span>
           </div>
         </div>

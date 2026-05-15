@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { Heart, MessageCircle, Bookmark, Home as HomeIcon } from "lucide-react";
+import { Heart, Bookmark, Home as HomeIcon } from "lucide-react";
 import "../styles/reels.css";
 import "../styles/navbar.css";
 
@@ -23,7 +23,9 @@ const UserHomePage = () => {
   // autoplay/pause when in view
   useEffect(() => {
     if (!containerRef.current) return;
+
     const options = { threshold: [0.25, 0.6, 0.9] };
+
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         const v = entry.target;
@@ -44,58 +46,76 @@ const UserHomePage = () => {
   // fetch videos
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/food", { withCredentials: true })
+      .get("/api/food", { withCredentials: true })
       .then((response) => {
-        console.log("Fetched:", response.data);
-        setVideos(response.data.Fooditems || []);
+        setVideos(
+          (response.data.Fooditems || []).map((item) => ({
+            ...item,
+            liked: item.liked ?? false,
+            saved: item.saved ?? false,
+          }))
+        );
       })
       .catch((err) => {
         console.error("Error fetching videos:", err);
       });
   }, []);
 
-  const handleLike = async (id) => {
-  try {
-    const response = await axios.post(
-      "http://localhost:3000/api/food/like",
-      { foodId: id },
-      { withCredentials: true }
-    );
-
-    console.log(response.data.message);
-
-  
-  } catch (error) {
-    console.error("Error liking food:", error);
-  }
-};
-
-
-
-const handleSave = async (foodId) => {
-  try {
-    
+   const handleLike = async (id) => {
+    // Optimistic UI update
     setVideos((prev) =>
-      prev.map((v) => (v._id === foodId ? { ...v, saved: !v.saved } : v))
+      prev.map((item) =>
+        item._id === id
+          ? { ...item, liked: !item.liked }
+          : item
+      )
     );
 
-    // Call backend
-    const response = await axios.post(
-      "http://localhost:3000/api/food/save",
-      { foodId },
-      { withCredentials: true }
-    );
+    try {
+      await axios.post(
+        "/api/food/like",
+        { foodId: id },
+        { withCredentials: true }
+      );
+    } catch (error) {
+      console.error("Error liking food:", error);
 
-    console.log("✅ Save response:", response.data);
-  } catch (error) {
-    console.error("❌ Error saving food:", error);
+      // rollback if API fails
+      setVideos((prev) =>
+        prev.map((item) =>
+          item._id === id
+            ? { ...item, liked: !item.liked }
+            : item
+        )
+      );
+    }
+  };
 
-    // Rollback UI if backend fails
-    setVideos((prev) =>
-      prev.map((v) => (v._id === foodId ? { ...v, saved: !v.saved } : v))
-    );
-  }
-};
+  const handleSave = async (foodId) => {
+    try {
+      setVideos((prev) =>
+        prev.map((v) =>
+          v._id === foodId ? { ...v, saved: !v.saved } : v
+        )
+      );
+
+      await axios.post(
+        "/api/food/save",
+        { foodId },
+        { withCredentials: true }
+      );
+    } catch (error) {
+      console.error("Error saving food:", error);
+
+      // rollback
+      setVideos((prev) =>
+        prev.map((v) =>
+          v._id === foodId ? { ...v, saved: !v.saved } : v
+        )
+      );
+    }
+  };
+
   return (
     <div className="reels-root">
       <div className="reels-container" ref={containerRef}>
@@ -107,7 +127,7 @@ const handleSave = async (foodId) => {
               <video
                 ref={setVideoRef(item._id)}
                 className="reel-video"
-                src={item.video} 
+                src={item.video}
                 muted
                 loop
                 playsInline
@@ -115,19 +135,20 @@ const handleSave = async (foodId) => {
               />
 
               <div className="reel-actions">
-<button
-  aria-label="Like"
-  className={`icon-btn ${item.liked ? "active" : ""}`}
-  onClick={() => handleLike(item._id)}
->
-  <Heart
-    size={22}
-    strokeWidth={1.8}
-    stroke={item.liked ? "red" : "white"} // outline color
-    fill={item.liked ? "red" : "none"}    // inside color
-  />
-</button>
-
+                <button
+                  aria-label="Like"
+                  className={`icon-btn ${item.liked ? "active" : ""}`}
+                  onClick={() => handleLike(item._id)}
+                >
+                  <Heart
+                    size={22}
+                    strokeWidth={1.8}
+                    style={{
+                      stroke: item.liked ? "red" : "white",
+                      fill: item.liked ? "red" : "none",
+                    }}
+                  />
+                </button>
 
                 <button
                   aria-label="Save"
@@ -139,7 +160,9 @@ const handleSave = async (foodId) => {
               </div>
 
               <div className="reel-overlay">
-                <div className="reel-description">{item.description}</div>
+                <div className="reel-description">
+                  {item.description}
+                </div>
                 <Link
                   className="reel-visit"
                   to={`/restaurant/${item.foodPartner}`}
@@ -152,14 +175,14 @@ const handleSave = async (foodId) => {
         )}
       </div>
 
-      <nav className="bottom-navbar" role="navigation" aria-label="main nav">
-        <button className="nav-item" onClick={() => navigate("/")}>
-          <HomeIcon size={20} strokeWidth={1.6} />
+      <nav className="bottom-navbar">
+        <button className="nav-item"  onClick={() => navigate("/user/homepage")}>
+          <HomeIcon size={20}  />
           <span>Home</span>
         </button>
 
         <button className="nav-item" onClick={() => navigate("/saved")}>
-          <Bookmark size={20} strokeWidth={1.6} />
+          <Bookmark size={20} />
           <span>Saved</span>
         </button>
       </nav>

@@ -11,7 +11,7 @@ export default function ResProfile() {
 
   useEffect(() => {
   
-    axios.get(`http://localhost:3000/api/restaurant/${id}`, 
+    axios.get(`/api/restaurant/${id}`, 
       {withCredentials: true})
        .then(response => {
           setProfile(response.data.restaurant)

@@ -13,7 +13,7 @@ const PartnerLogin = ()=>{
      const email = e.target.email.value;
     const password = e.target.password.value;
 
-     const response = await axios.post("http://localhost:3000/api/auth/food-partner/login",{
+     const response = await axios.post("/api/auth/food-partner/login",{
       email,
       password},
       {
@@ -34,7 +34,7 @@ const PartnerLogin = ()=>{
             <p className="muted">Sign in to manage your restaurant.</p>
           </div>
           <div className="right">
-            <a href="/user/register" className="partner-switch">Switch</a>
+            <a href="/" className="partner-switch">Switch</a>
             <span className="role-label">User</span>
           </div>
         </div>

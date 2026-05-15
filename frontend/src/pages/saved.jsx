@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "../styles/reels.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 const Saved = () => {
+  const navigate = useNavigate();
   const [savedVideos, setSavedVideos] = useState([]);
 
   useEffect(() => {
-    const response = axios.get("http://localhost:3000/api/food/saved", {withCredentials: true})
+    const response = axios.get("/api/food/saved", {withCredentials: true})
     .then(response => {
       const savedFoods = response.data.savedFoods.map((item) =>({
         _id: item.food._id,
@@ -21,6 +22,9 @@ const Saved = () => {
 
   return (
     <div className="reels-container">
+      <div>
+        <button className="back-btn back-btn-fixed" onClick={() => navigate(-1)} aria-label="Back">←</button>
+      </div>
       {savedVideos.length === 0 ? (
         <p style={{ color: "#fff", textAlign: "center", marginTop: "50%" }}>
           No saved videos yet.
