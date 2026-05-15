@@ -6,22 +6,24 @@ const restaurantRoutes = require("./routes/restaurant.routes");
 const cors = require("cors");
 
 const app = express();
-
 const allowedOrigins = [
   "http://localhost:5173",
-  process.env.FRONTEND_URL
-].filter(Boolean);
+  "https://snack-view-frontend.vercel.app"
+];
 
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(null, false);
+      console.log("Blocked by CORS:", origin);
+      callback(new Error("CORS not allowed"));
     }
   },
   credentials: true
 }));
+
+app.options("*", cors());
 
 app.use(express.json());
 app.use(cookieParser());
