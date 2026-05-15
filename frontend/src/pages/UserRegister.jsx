@@ -17,7 +17,7 @@ const UserRegister = ()=>{
    const password = e.target.password.value;
   
 
-   const response = await api.post("/api/auth/user/register", {
+   const response = await api.post("/auth/user/register", {
     fullName: name,
     email,
     password
