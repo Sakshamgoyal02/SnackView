@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Heart, Bookmark, Home as HomeIcon } from "lucide-react";
 import "../styles/reels.css";
 import "../styles/navbar.css";
+import api from "../utils/api";
 
 const UserHomePage = () => {
   const [videos, setVideos] = useState([]);
@@ -45,8 +46,7 @@ const UserHomePage = () => {
 
   // fetch videos
   useEffect(() => {
-    axios
-      .get("/api/food", { withCredentials: true })
+    api.get("/api/food")
       .then((response) => {
         setVideos(
           (response.data.Fooditems || []).map((item) => ({
@@ -72,10 +72,9 @@ const UserHomePage = () => {
     );
 
     try {
-      await axios.post(
+      await api.post(
         "/api/food/like",
         { foodId: id },
-        { withCredentials: true }
       );
     } catch (error) {
       console.error("Error liking food:", error);
@@ -99,10 +98,9 @@ const UserHomePage = () => {
         )
       );
 
-      await axios.post(
+      await api.post(
         "/api/food/save",
         { foodId },
-        { withCredentials: true }
       );
     } catch (error) {
       console.error("Error saving food:", error);

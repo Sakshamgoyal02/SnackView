@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import '../styles/res.css'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios' 
+import api from '../utils/api'
 
 export default function ResProfile() {
   const navigate = useNavigate()
@@ -11,17 +12,11 @@ export default function ResProfile() {
 
   useEffect(() => {
   
-    axios.get(`/api/restaurant/${id}`, 
-      {withCredentials: true})
+    api.get(`/api/restaurant/${id}`)
        .then(response => {
           setProfile(response.data.restaurant)
           setVideos(response.data.restaurant.foodItems)
- 
-
        })
-
-    
-
   }, [id])
 
   return (

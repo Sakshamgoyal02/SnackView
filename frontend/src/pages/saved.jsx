@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import "../styles/reels.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import api from "../utils/api";
 
 const Saved = () => {
   const navigate = useNavigate();
   const [savedVideos, setSavedVideos] = useState([]);
 
   useEffect(() => {
-    const response = axios.get("/api/food/saved", {withCredentials: true})
+    const response = api.get("/api/food/saved")
     .then(response => {
       const savedFoods = response.data.savedFoods.map((item) =>({
         _id: item.food._id,

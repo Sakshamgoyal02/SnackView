@@ -3,6 +3,7 @@ import '../styles/theme.css'
 import '../styles/auth.css'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import api from '../utils/api'
 
 const PartnerLogin = ()=>{
   const navigate = useNavigate()
@@ -13,12 +14,10 @@ const PartnerLogin = ()=>{
      const email = e.target.email.value;
     const password = e.target.password.value;
 
-     const response = await axios.post("/api/auth/food-partner/login",{
+     const response = await api.post("/api/auth/food-partner/login",{
       email,
-      password},
-      {
-        withCredentials: true
-      });
+      password}
+  );
     console.log(response.data);
 
     navigate("/create-food");

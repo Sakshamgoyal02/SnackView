@@ -3,6 +3,7 @@ import "../styles/theme.css";
 import axios from "axios";
 import "../styles/create-food.css";
 import {useNavigate} from 'react-router-dom'
+import api from "../utils/api";
 
 const CreateFood = () => {
   const [newFood, setNewFood] = useState({
@@ -52,9 +53,7 @@ const CreateFood = () => {
     formData.append("restaurant", restaurant);
     formData.append("video", video);
 
-    const response = await axios.post("/api/food", formData, {
-      withCredentials: true,
-    });
+    const response = await api.post("/api/food", formData);
     console.log(response.data);
     navigate("/");
   };
