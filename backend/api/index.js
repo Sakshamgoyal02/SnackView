@@ -1,4 +1,4 @@
-const app = require("../backend/server"); 
+const app = require("../server"); 
 const connectDB = require("../backend/src/db"); 
 
 let isConnected = false;
