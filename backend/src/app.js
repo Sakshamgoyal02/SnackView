@@ -5,7 +5,13 @@ const foodRoutes = require("./routes/food.routes");
 const restaurantRoutes = require("./routes/restaurant.routes");
 const cors = require("cors");
 
+import { useEffect } from "react";
+
 const app = express();
+
+useEffect(() => {
+  console.log("ENV CHECK:", import.meta.env.VITE_API_URL);
+}, []);
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "https://snack-view-frontend.vercel.app");
