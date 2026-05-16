@@ -5,8 +5,14 @@ let isConnected = false;
 
 module.exports = async (req, res) => {
   try {
-
-     console.log("ENV MONGODB_URI:", process.env.MONGODB_URI);
+  
+    if (req.method === "OPTIONS") {
+      res.setHeader("Access-Control-Allow-Origin", "https://snack-view-frontend.vercel.app");
+      res.setHeader("Access-Control-Allow-Credentials", "true");
+      res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+      res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+      return res.status(200).end();
+    }
 
     if (!isConnected) {
       await connectDB();
@@ -14,8 +20,9 @@ module.exports = async (req, res) => {
     }
 
     return app(req, res);
+
   } catch (err) {
-    console.error("Serverless error:", err);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error("🔥 Serverless error:", err);
+    res.status(500).json({ error: err.message });
   }
 };
