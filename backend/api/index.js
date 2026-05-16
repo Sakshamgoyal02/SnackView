@@ -1,13 +1,18 @@
-const app = require("../server"); 
-const connectDB = require("../backend/src/db"); 
+const app = require("../src/app");
+const connectDB = require("../src/db");
 
 let isConnected = false;
 
 module.exports = async (req, res) => {
-  if (!isConnected) {
-    await connectDB();
-    isConnected = true;
-  }
+  try {
+    if (!isConnected) {
+      await connectDB();
+      isConnected = true;
+    }
 
-  return app(req, res);
-};
+    return app(req, res);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+};a
