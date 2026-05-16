@@ -8,17 +8,32 @@ const restaurantRoutes = require("./routes/restaurant.routes");
 
 const app = express();
 
-// ✅ CORS configuration (IMPORTANT)
-const allowedOrigin = "https://snack-view-frontend.vercel.app";
+// ✅ Allowed origins (VERY IMPORTANT)
+const allowedOrigins = [
+  "https://snack-view-frontend.vercel.app",
+  "http://localhost:5173"
+];
 
+// ✅ CORS configuration (handles credentials + dynamic origin)
 app.use(cors({
-  origin: allowedOrigin,
-  credentials: true
+  origin: function (origin, callback) {
+    // allow requests with no origin (like Postman)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
-// ✅ Handle preflight requests explicitly
+// ✅ Handle preflight requests (CRITICAL for your issue)
 app.options("*", cors({
-  origin: allowedOrigin,
+  origin: allowedOrigins,
   credentials: true
 }));
 
@@ -26,7 +41,7 @@ app.options("*", cors({
 app.use(express.json());
 app.use(cookieParser());
 
-// ✅ Health check route
+// ✅ Test route
 app.get("/api", (req, res) => {
   res.send("API root working");
 });
