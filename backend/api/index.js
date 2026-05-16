@@ -1,5 +1,5 @@
 const app = require("../src/app");
-const connectDB = require("../src/db");
+const connectDB = require("../src/db/db");
 
 let isConnected = false;
 
@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
   try {
 
      console.log("ENV MONGODB_URI:", process.env.MONGODB_URI);
-     
+
     if (!isConnected) {
       await connectDB();
       isConnected = true;
