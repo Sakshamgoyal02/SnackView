@@ -5,6 +5,9 @@ let isConnected = false;
 
 module.exports = async (req, res) => {
   try {
+
+     console.log("ENV MONGODB_URI:", process.env.MONGODB_URI);
+     
     if (!isConnected) {
       await connectDB();
       isConnected = true;
